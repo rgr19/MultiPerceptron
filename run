@@ -16,16 +16,18 @@ PYTHON_LIB_PATH=$(${PYTHON_DIR}/bin/python -c "from sysconfig import get_paths; 
 PYTHON_INCLUDE_PATH=$(${PYTHON_DIR}/bin/python -c "from sysconfig import get_paths; print(get_paths()['include'])")
 PYTHON_SITEPACKAGES=$(${PYTHON_DIR}/bin/python -c "from sysconfig import get_paths; print(get_paths()['purelib'])")
 
-PATH=$PATH PYTHONHOME=${PYTHON_DIR} LD_LIBRARY_PATH=${LIBS} ${PWD}/target/${CMAKE_BUILD_TYPE,}/bin/${TARGET}
 
-
-exit -1
+#this is to execute some target from command line
+#PATH=$PATH PYTHONHOME=${PYTHON_DIR} LD_LIBRARY_PATH=${LIBS} ${PWD}/target/${CMAKE_BUILD_TYPE}/bin/${TARGET}
+#exit -1
 
 echo "############ Run make wrapper #################"
 echo "############ Input : { $@ }..."
 
-make CMAKE=/home/a/W/W.priv/Extern/CMake/bin/cmake $@ || exit
-make CMAKE=/home/a/W/W.priv/Extern/CMake/bin/cmake $@ install || true
+# here we are building with make wrapper that can be found in Makefile
+
+make CMAKE=${HOME}/W/W.priv/Extern/CMake/bin/cmake $@ || exit
+make CMAKE=${HOME}/W/W.priv/Extern/CMake/bin/cmake $@ install || true
 
 echo "###############################################"
 echo "############ Show binaries ####################"
